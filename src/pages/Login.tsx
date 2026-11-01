@@ -17,7 +17,7 @@ export function Component() {
   const [password, setPassword] = useState("")
   const [loggingIn, setLoggingIn] = useState(false)
 
-  const login = async (event: SubmitEvent<HTMLFormElement>) => {
+  async function login(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
     setLoggingIn(true)
     const { error } = await supabase.auth.signInWithPassword({ email, password })
@@ -61,7 +61,8 @@ export function Component() {
             <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">Or continue with</FieldSeparator>
             <Field>
               <Button variant="outline" type="button" onClick={() => toast.error("Currently not available !")}>
-                <Google /> Google
+                <Google />
+                Google
               </Button>
             </Field>
           </FieldGroup>

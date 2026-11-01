@@ -19,7 +19,7 @@ export function Component() {
   const [password, setPassword] = useState("")
   const [registering, setRegistering] = useState(false)
 
-  const register = async (event: SubmitEvent<HTMLFormElement>) => {
+  async function register(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
     if (!isPasswordValid(password)) return toast.error("Password doesn't meet the requirements")
     setRegistering(true)
@@ -60,7 +60,8 @@ export function Component() {
             <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">Or continue with</FieldSeparator>
             <Field>
               <Button variant="outline" type="button" onClick={() => toast.error("Currently not available !")}>
-                <Google /> Google
+                <Google />
+                Google
               </Button>
             </Field>
           </FieldGroup>

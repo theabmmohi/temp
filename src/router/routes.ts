@@ -12,5 +12,9 @@ export const routes: RouteObject[] = [
   {
     path: "/login",
     lazy: () => import("@page/Login")
+  },
+  {
+    path: "/verify",
+    lazy: () => import("@page/Verify")
   }
 ]
