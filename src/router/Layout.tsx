@@ -40,7 +40,7 @@ export function Layout() {
           <Outlet />
         </main>
       </SidebarInset>
-      <Toaster position="top-right" swipeDirections={["top", "right", "bottom", "left"]} className="select-none" />
+      <Toaster swipeDirections={["top", "right", "bottom", "left"]} className="select-none" />
     </SidebarProvider>
   )
 }
