@@ -39,7 +39,7 @@ export function Component() {
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
-              <Input id="email" type="email" placeholder="you@example.com" value={email} onChange={(event) => setEmail(event.target.value)} required />
+              <Input id="email" type="email" autoComplete="email" placeholder="you@example.com" value={email} onChange={(event) => setEmail(event.target.value)} required />
             </Field>
             <Field>
               <div className="flex items-center">
@@ -48,7 +48,7 @@ export function Component() {
                   Forgot your password?
                 </Link>
               </div>
-              <Input id="password" type="password" value={password} onChange={(event) => setPassword(event.target.value)} required />
+              <Input id="password" type="password" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required />
             </Field>
             <Field>
               <Button type="submit" processing={loggingIn}>

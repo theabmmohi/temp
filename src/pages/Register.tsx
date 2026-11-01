@@ -21,7 +21,7 @@ export function Component() {
 
   const register = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!isPasswordValid(password)) return
+    if (!isPasswordValid(password)) return toast.error("Password doesn't meet the requirements")
     setRegistering(true)
     const { error } = await supabase.auth.signUp({ email, password })
     if (error) toast.error(error.message)
@@ -42,11 +42,11 @@ export function Component() {
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
-              <Input id="email" type="email" placeholder="you@example.com" value={email} onChange={(event) => setEmail(event.target.value)} required />
+              <Input id="email" type="email" autoComplete="email" placeholder="you@example.com" value={email} onChange={(event) => setEmail(event.target.value)} required />
             </Field>
             <Field>
               <FieldLabel htmlFor="password">Password</FieldLabel>
-              <Input id="password" type="password" value={password} onChange={(event) => setPassword(event.target.value)} required />
+              <Input id="password" type="password" autoComplete="new-password" value={password} onChange={(event) => setPassword(event.target.value)} required />
               <PasswordRules password={password} />
             </Field>
             <Field>
