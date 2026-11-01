@@ -4,7 +4,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@ui/avatar"
 export function AppsSidebar() {
   return (
     <Sidebar>
-      <SidebarHeader className="border-b">
+      <SidebarHeader className="border-b p-2.5">
         <Avatar>
           <AvatarImage src="/icon.png" />
           <AvatarFallback>TD</AvatarFallback>

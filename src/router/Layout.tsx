@@ -12,9 +12,11 @@ export function Layout() {
     <SidebarProvider>
       <AppsSidebar />
       <SidebarInset>
-        <header className="flex items-center border-b sticky top-0 bg-background p-2">
+        <header className="flex items-center border-b sticky top-0 bg-background p-2 select-none">
           <SidebarTrigger />
-          <h1 className="font-mono">{import.meta.env.VITE_APP_NAME}</h1>
+          <Link to="/" className="font-mono">
+            {import.meta.env.VITE_APP_NAME}
+          </Link>
           <div className="flex justify-end flex-1">
             {user ? (
               <Avatar>
@@ -33,7 +35,7 @@ export function Layout() {
             )}
           </div>
         </header>
-        <main>
+        <main className="p-4">
           <Outlet />
         </main>
       </SidebarInset>
