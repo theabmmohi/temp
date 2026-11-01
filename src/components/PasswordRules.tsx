@@ -6,7 +6,7 @@ export function PasswordRules({ password }: { password: string }) {
   const results = passwordRules.map((rule) => rule.test(password))
   const passedCount = results.filter(Boolean).length
 
-  if (passedCount === 0 || passedCount === passwordRules.length) return null
+  if (password === "" || passedCount === passwordRules.length) return null
 
   return (
     <ul className="grid gap-1 text-sm" aria-live="polite">
