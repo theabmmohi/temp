@@ -4,6 +4,7 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"],
+      "@component/*": ["./src/components/*"],
       "@ui/*": ["./src/components/ui/*"],
       "@page/*": ["./src/pages/*"],
       "@router/*": ["./src/router/*"],

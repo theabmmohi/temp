@@ -1,7 +1,9 @@
 import { Field, FieldGroup, FieldLabel, FieldDescription, FieldSeparator } from "@ui/field"
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@ui/card"
 import { Link, Navigate, useNavigate } from "react-router"
+import { PasswordRules } from "@component/PasswordRules"
 import { useState, type SubmitEvent } from "react"
+import { isPasswordValid } from "@util/password"
 import { supabase } from "@/utils/supabase"
 import { useAuth } from "@/utils/auth"
 import { Button } from "@ui/button"
@@ -19,6 +21,7 @@ export function Component() {
 
   const register = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (!isPasswordValid(password)) return
     setRegistering(true)
     const { error } = await supabase.auth.signUp({ email, password })
     if (error) toast.error(error.message)
@@ -44,6 +47,7 @@ export function Component() {
             <Field>
               <FieldLabel htmlFor="password">Password</FieldLabel>
               <Input id="password" type="password" value={password} onChange={(event) => setPassword(event.target.value)} required />
+              <PasswordRules password={password} />
             </Field>
             <Field>
               <Button type="submit" processing={registering}>
