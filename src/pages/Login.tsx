@@ -1,8 +1,10 @@
 import { Field, FieldGroup, FieldLabel, FieldDescription, FieldSeparator } from "@ui/field"
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@ui/card"
-import { Google } from "@thesvg/react"
 import { Button } from "@ui/button"
 import { Input } from "@ui/input"
+import { toast } from "sonner"
+
+import Google from "@thesvg/react/google"
 
 export function Component() {
   return (
@@ -14,13 +16,6 @@ export function Component() {
       <CardContent>
         <form>
           <FieldGroup>
-            <Field>
-              <Button variant="outline" type="button">
-                <Google/>
-                Login with Google
-              </Button>
-            </Field>
-            <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">Or continue with</FieldSeparator>
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
               <Input id="email" type="email" placeholder="m@example.com" required />
@@ -39,6 +34,13 @@ export function Component() {
               <FieldDescription className="text-center">
                 Don&apos;t have an account? <a href="#">Sign up</a>
               </FieldDescription>
+            </Field>
+            <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">Or continue with</FieldSeparator>
+            <Field>
+              <Button variant="outline" type="button" onClick={() => toast.error("Currently not available !")}>
+                <Google />
+                Login with Google
+              </Button>
             </Field>
           </FieldGroup>
         </form>

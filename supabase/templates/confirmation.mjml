@@ -4,13 +4,8 @@
     <mj-attributes>
       <mj-all font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" />
       <mj-text font-size="16px" line-height="24px" color="#525252" align="left" padding="0 0 16px 0" />
-      <mj-button background-color="#181818" color="#ffffff" border-radius="32px" font-size="16px" inner-padding="8px 18px" padding="14px 0 30px 0" target="_blank" rel="noopener" />
     </mj-attributes>
-    <mj-style>
-      .break-all a {
-        word-break: break-all;
-      }
-    </mj-style>
+    <mj-style> .break-all a { word-break: break-all; } </mj-style>
     <mj-raw> <meta name="color-scheme" content="light" /> <meta name="supported-color-schemes" content="light" /> </mj-raw>
   </mj-head>
   <mj-body background-color="#fafafa" width="570px">
@@ -18,10 +13,12 @@
       <mj-section padding="0">
         <mj-column>
           <mj-text font-size="20px" color="#181818"> Confirm your email address </mj-text>
-          <mj-text> You are receiving this email because we received a signup request for your email address. </mj-text>
-          <mj-button href="{{ .SiteURL }}/confirm/{{ .TokenHash }}"> Confirm email </mj-button>
-          <mj-text> This link will expire in 1 hour. </mj-text>
-          <mj-text> If you did not create an account, no further action is required. </mj-text>
+          <mj-text> Use the code below to confirm your email address and finish creating your account. </mj-text>
+          <mj-text align="center">
+            <span style="font-family: monospace, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 32px; font-weight: bold; color: #181818; background-color: #fafafa; border: 2px dashed #000000; padding: 16px; border-radius: 16px; display: inline-block;">{{ .Token }}</span>
+          </mj-text>
+          <mj-text> This code will expire in 1 hour. Do not share it with anyone. </mj-text>
+          <mj-text> If you did not create an account, you can safely ignore this email. </mj-text>
           <mj-text> Regards,<br />TeaDesk </mj-text>
         </mj-column>
       </mj-section>

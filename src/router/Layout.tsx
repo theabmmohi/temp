@@ -4,6 +4,7 @@ import { AppsSidebar } from "@/components/AppSidebar"
 import { Outlet, Link } from "react-router"
 import { buttonVariants } from "@ui/button"
 import { useAuth } from "@util/auth"
+import { Toaster } from "sonner"
 
 export function Layout() {
   const { user } = useAuth.getState()
@@ -39,6 +40,7 @@ export function Layout() {
           <Outlet />
         </main>
       </SidebarInset>
+      <Toaster position="top-right" swipeDirections={["top", "right", "bottom", "left"]} className="select-none" />
     </SidebarProvider>
   )
 }
