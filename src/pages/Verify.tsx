@@ -1,43 +1,90 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/card"
+import { useEffect, useState, type SubmitEvent } from "react"
+import { type EmailOtpType } from "@supabase/supabase-js"
 import { OTPInput, REGEXP_ONLY_DIGITS } from "input-otp"
+import { useLocation, useNavigate } from "react-router"
 import { Field, FieldLabel } from "@ui/field"
 import { RefreshCwIcon } from "lucide-react"
-import { useLocation } from "react-router"
-import { type SubmitEvent } from "react"
+import { supabase } from "@/utils/supabase"
 import { Button } from "@ui/button"
 import { Slot } from "@ui/otp-slot"
+import { toast } from "sonner"
+
+const RESEND_COOLDOWN = 60
 
 export function Component() {
-  const location = useLocation()
+  const navigate = useNavigate()
+  const { state } = useLocation() as { state: { email: string; type: EmailOtpType } | null }
 
-  const { state } = location as { state: { email: string; type: string } | null }
+  const [code, setCode] = useState("")
+  const [verifying, setVerifying] = useState(false)
+  const [resending, setResending] = useState(false)
+  const [cooldown, setCooldown] = useState(0)
 
-  async function verify(event: SubmitEvent<HTMLFormElement>) {
-    event.preventDefault()
-  }
+  useEffect(() => {
+    if (cooldown <= 0) return
+    const timer = setTimeout(() => setCooldown((seconds) => seconds - 1), 1000)
+    return () => clearTimeout(timer)
+  }, [cooldown])
 
   if (!state?.email || !state.type) return <h1>Invalid session !</h1>
+  const { email, type } = state
+
+  async function verify(token: string) {
+    if (verifying || token.length < 6) return
+    setVerifying(true)
+    const { error } = await supabase.auth.verifyOtp({ email, token, type })
+    if (error) {
+      toast.error(error.message)
+      setCode("")
+      setVerifying(false)
+      return
+    }
+    navigate("/", { replace: true })
+  }
+
+  async function resend() {
+    setResending(true)
+    const { error } = await supabase.auth.resend({ type: "signup", email })
+    if (error) toast.error(error.message)
+    else {
+      toast.success("A new code was sent")
+      setCooldown(RESEND_COOLDOWN)
+    }
+    setResending(false)
+  }
+
+  const submit = (event: SubmitEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    verify(code)
+  }
 
   return (
     <Card className="max-w-sm m-auto">
       <CardHeader className="text-center">
-        <CardTitle className="text-xl">Welcome back</CardTitle>
-        <CardDescription>Login to your {import.meta.env.VITE_APP_NAME} account</CardDescription>
+        <CardTitle className="text-xl">Verify your email</CardTitle>
+        <CardDescription>Enter the 6-digit code sent to {email}</CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={verify}>
+        <form onSubmit={submit}>
           <div className="flex items-center justify-between">
             <FieldLabel htmlFor="otp-verification">Verification code</FieldLabel>
-            <Button type="button" variant="outline" size="xs">
+            <Button type="button" variant="outline" size="xs" processing={resending} disabled={cooldown > 0} onClick={resend}>
               <RefreshCwIcon />
-              Resend Code
+              {cooldown > 0 ? `Resend in ${cooldown}s` : "Resend Code"}
             </Button>
           </div>
           <Field className="py-5">
             <OTPInput
+              id="otp-verification"
+              autoFocus
               maxLength={6}
+              value={code}
+              onChange={setCode}
+              onComplete={verify}
+              disabled={verifying}
               pattern={REGEXP_ONLY_DIGITS}
-              containerClassName="group flex items-center has-[:disabled]:opacity-40"
+              containerClassName="group flex items-center justify-center has-[:disabled]:opacity-40"
               render={({ slots }) => (
                 <div className="flex">
                   {slots.map((slot, idx) => (
@@ -48,7 +95,9 @@ export function Component() {
             />
           </Field>
           <Field>
-            <Button type="submit">Verify</Button>
+            <Button type="submit" processing={verifying}>
+              Verify
+            </Button>
           </Field>
         </form>
       </CardContent>
