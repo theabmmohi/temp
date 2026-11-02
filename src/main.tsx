@@ -22,6 +22,7 @@ const router = createBrowserRouter([
       const { setState } = useAuth
       const { data } = await supabase.auth.getUser()
       setState({ user: data.user })
+      console.log("Im loader !")
       return null
     }
   }
