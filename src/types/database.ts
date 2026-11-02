@@ -39,7 +39,39 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          address: string | null
+          created_at: string
+          dob: string | null
+          id: string
+          name: string
+          note: string | null
+          phone: string | null
+          type: Database["public"]["Enums"]["account_type"]
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          dob?: string | null
+          id: string
+          name: string
+          note?: string | null
+          phone?: string | null
+          type: Database["public"]["Enums"]["account_type"]
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          dob?: string | null
+          id?: string
+          name?: string
+          note?: string | null
+          phone?: string | null
+          type?: Database["public"]["Enums"]["account_type"]
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -48,7 +80,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      account_type: "mentor" | "learner"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -178,6 +210,8 @@ export const Constants = {
     Enums: {},
   },
   public: {
-    Enums: {},
+    Enums: {
+      account_type: ["mentor", "learner"],
+    },
   },
 } as const
