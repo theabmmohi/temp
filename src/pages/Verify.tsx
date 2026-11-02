@@ -14,7 +14,7 @@ const RESEND_COOLDOWN = 60
 
 export function Component() {
   const navigate = useNavigate()
-  const { state } = useLocation() as { state: { email: string; type: EmailOtpType } | null }
+  const { state } = useLocation() as { state: { email: string; type: EmailOtpType; title: string; description: string } | null }
 
   const [code, setCode] = useState("")
   const [verifying, setVerifying] = useState(false)
@@ -40,7 +40,8 @@ export function Component() {
       setVerifying(false)
       return
     }
-    navigate("/", { replace: true })
+    if (type === "signup") navigate("/onboard", { replace: true })
+    else navigate("/", { replace: true })
   }
 
   async function resend() {
@@ -62,8 +63,8 @@ export function Component() {
   return (
     <Card className="max-w-sm m-auto">
       <CardHeader className="text-center">
-        <CardTitle className="text-xl">Verify your email</CardTitle>
-        <CardDescription>Enter the 6-digit code sent to {email}</CardDescription>
+        <CardTitle className="text-xl">{state.title}</CardTitle>
+        <CardDescription>{state.description}</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={submit}>

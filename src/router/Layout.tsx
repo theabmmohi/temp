@@ -7,7 +7,7 @@ import { useAuth } from "@util/auth"
 import { Toaster } from "sonner"
 
 export function Layout() {
-  const { user } = useAuth.getState()
+  const user = useAuth(s => s.user)
 
   return (
     <SidebarProvider>
