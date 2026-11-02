@@ -25,7 +25,7 @@ export function Component() {
     setRegistering(true)
     const { error } = await supabase.auth.signUp({ email, password })
     if (error) toast.error(error.message)
-    else navigate("/verify", { state: { email, type: "email" } })
+    else navigate("/verify", { state: { email, type: "email", title: "Verify your email", description: "Enter the 6-digit code sent to {email}" } })
     setRegistering(false)
   }
 
